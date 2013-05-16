@@ -435,16 +435,20 @@ class LinkedInApplication(object):
                      submitted_image_url):
         post = {
             'comment': comment,
-            'content': {
-                'title': title,
-                'submitted-url': submitted_url,
-                'submitted-image-url': submitted_image_url,
-                'description': description
-            },
+            
             'visibility': {
                 'code': 'anyone'
             }
         }
+
+        if submitted_url:
+            post['content'] = {
+                'title': title,
+                'submitted-url': submitted_url,
+                'submitted-image-url': submitted_image_url,
+                'description': description
+            }
+
         url = '%s/~/shares' % ENDPOINTS.PEOPLE
         try:
             response = self.make_request('POST', url, data=json.dumps(post))
